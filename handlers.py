@@ -12,7 +12,8 @@ buttons = [
 ]
 
 def start(update, context):
-    update.effective_message.reply_text(WELCOME_MESSAGE,
+    update.effective_message.reply_photo("https://telegra.ph/file/e2b61fdd83480efe5d49c.jpg",
+          WELCOME_MESSAGE, 
           reply_markup=InlineKeyboardMarkup(buttons)) 
 
     mention = update.message.from_user.mention,
