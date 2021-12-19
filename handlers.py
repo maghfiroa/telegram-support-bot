@@ -11,7 +11,7 @@ def start(update, context):
             text="🧾 Testi VIP NSID", url="https://t.me/vvipnsid"
         ),
 ]
-]
+]) 
 
 
     mention = update.message.from_user.mention,
