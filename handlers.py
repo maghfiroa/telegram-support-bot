@@ -6,7 +6,7 @@ from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 buttons = [
     [
         InlineKeyboardButton(
-            text="Add to Group 👥", url="t.me/userbotindobot?startgroup=true"
+            text="Testi VIP NSID 🧾", url="https://t.me/vvipnsid"
         ),
 ]
 ]
