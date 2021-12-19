@@ -15,7 +15,7 @@ def start(update, context):
     context.bot.send_message(
         chat_id=TELEGRAM_SUPPORT_CHAT_ID,
         text=f"""
-📞 𝗧𝗲𝗿𝗵𝘂𝗯𝘂𝗻𝗴 : {first}.
+📞 𝗧𝗲𝗿𝗵𝘂𝗯𝘂𝗻𝗴 : {mention}.
 𝗨𝘀𝗲𝗿𝗻𝗮𝗺𝗲 : {username}
 𝗨𝘀𝗲𝗿 𝗜𝗗 : {id}
         """,
