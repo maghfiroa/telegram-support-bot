@@ -3,16 +3,17 @@ from telegram.ext import CommandHandler, MessageHandler, Filters
 from settings import WELCOME_MESSAGE, DAFTAR_HARGA, TELEGRAM_SUPPORT_CHAT_ID, REPLY_TO_THIS_MESSAGE, WRONG_REPLY
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 
-def start(update, context):
-    update.message.reply_text(WELCOME_MESSAGE,
-          buttons = [
+buttons = [
     [
         InlineKeyboardButton(
-            text="🧾 Testi VIP NSID", url="https://t.me/vvipnsid"
+            text="Add to Group 👥", url="t.me/userbotindobot?startgroup=true"
         ),
 ]
-]) 
+]
 
+def start(update, context):
+    update.effective_message.reply_text(WELCOME_MESSAGE,
+          reply_markup=InlineKeyboardMarkup(buttons)) 
 
     mention = update.message.from_user.mention,
     username = None if not update.message.from_user.username else '@' + message.from_user.username,
