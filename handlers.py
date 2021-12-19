@@ -7,12 +7,17 @@ from settings import WELCOME_MESSAGE, TELEGRAM_SUPPORT_CHAT_ID, REPLY_TO_THIS_ME
 def start(update, context):
     update.message.reply_text(WELCOME_MESSAGE)
 
-    user_info = update.message.from_user.to_dict()
+    mention = update.message.from_user.mention,
+    username = None if not update.message.from_user.username else '@' + message.from_user.username,
+    first = update.message.from_user.first_name, 
+    id = update.message.from_user.id
 
     context.bot.send_message(
         chat_id=TELEGRAM_SUPPORT_CHAT_ID,
         text=f"""
-📞 Connected {user_info}.
+📞 𝗧𝗲𝗿𝗵𝘂𝗯𝘂𝗻𝗴 : {first}.
+𝗨𝘀𝗲𝗿𝗻𝗮𝗺𝗲 : {username}
+𝗨𝘀𝗲𝗿 𝗜𝗗 : {id}
         """,
     )
 
