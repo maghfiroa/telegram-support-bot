@@ -1,12 +1,17 @@
 import os
 from telegram.ext import CommandHandler, MessageHandler, Filters
 from settings import WELCOME_MESSAGE, DAFTAR_HARGA, TELEGRAM_SUPPORT_CHAT_ID, REPLY_TO_THIS_MESSAGE, WRONG_REPLY
-
+from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 
 def start(update, context):
     update.message.reply_text(WELCOME_MESSAGE,
-          buttons=[
-                        [Button.url("🧾 Testi VIP NSID", url="https://t.me/vvipnsid")]]) 
+          buttons = [
+    [
+        InlineKeyboardButton(
+            text="Add to Group 👥", url="t.me/userbotindobot?startgroup=true"
+        ),
+]
+]
 
 
     mention = update.message.from_user.mention,
