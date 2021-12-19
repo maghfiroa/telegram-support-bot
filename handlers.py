@@ -1,11 +1,14 @@
 import os
 from telegram.ext import CommandHandler, MessageHandler, Filters
 
-from settings import WELCOME_MESSAGE, TELEGRAM_SUPPORT_CHAT_ID, REPLY_TO_THIS_MESSAGE, WRONG_REPLY
+from settings import WELCOME_MESSAGE, DAFTAR_HARGA, TELEGRAM_SUPPORT_CHAT_ID, REPLY_TO_THIS_MESSAGE, WRONG_REPLY
 
 
 def start(update, context):
-    update.message.reply_text(WELCOME_MESSAGE)
+    update.message.reply_text(WELCOME_MESSAGE,
+          buttons=[
+                        [Button.url("🧾 Testi VIP NSID", url="https://t.me/vvipnsid")]]) 
+
 
     mention = update.message.from_user.mention,
     username = None if not update.message.from_user.username else '@' + message.from_user.username,
@@ -21,7 +24,9 @@ def start(update, context):
         """,
     )
 
-
+def vip(update, context):
+    update.message.reply_text(DAFTAR_HARGA) 
+          
 def forward_to_chat(update, context):
     """{ 
         'message_id': 5, 
@@ -79,6 +84,7 @@ def forward_to_user(update, context):
 
 def setup_dispatcher(dp):
     dp.add_handler(CommandHandler('start', start))
+    dp.add_handler(CommandHandler('vip', vip))
     dp.add_handler(MessageHandler(Filters.chat_type.private, forward_to_chat))
     dp.add_handler(MessageHandler(Filters.chat(TELEGRAM_SUPPORT_CHAT_ID) & Filters.reply, forward_to_user))
     return dp
