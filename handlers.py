@@ -4,7 +4,7 @@ from time import sleep
 from telegram.ext import CommandHandler, MessageHandler, Filters
 
 from database import users_db
-from main import dp
+from main import dispatcher
 from database.filters import CustomFilters
 from telegram.error import BadRequest, TimedOut, Unauthorized
 from telegram import TelegramError
@@ -43,7 +43,7 @@ def get_user_id(username):
     else:
         for user_obj in users:
             try:
-                userdat = dp.bot.get_chat(user_obj["_id"])
+                userdat = dispatcher.bot.get_chat(user_obj["_id"])
                 if userdat.username == username:
                     return userdat.id
 
