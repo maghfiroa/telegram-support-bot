@@ -1,18 +1,18 @@
 import os
 from telegram.ext import CommandHandler, MessageHandler, Filters
-from settings import WELCOME_MESSAGE, DAFTAR_HARGA, TELEGRAM_SUPPORT_CHAT_ID, REPLY_TO_THIS_MESSAGE, WRONG_REPLY
+from settings import WELCOME_MESSAGE, TEXT_BUTTON, URL_BUTTON, DAFTAR_HARGA, START_IMG, TELEGRAM_SUPPORT_CHAT_ID, REPLY_TO_THIS_MESSAGE, WRONG_REPLY
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 
 buttons = [
     [
         InlineKeyboardButton(
-            text="Testi VIP NSID 🧾", url="https://t.me/vvipnsid"
+            text=TEXT_BUTTON, url=URL_BUTTON
         ),
 ]
 ]
 
 def start(update, context):
-    update.effective_message.reply_photo("https://telegra.ph/file/e2b61fdd83480efe5d49c.jpg",
+    update.effective_message.reply_photo(START_IMG,
           WELCOME_MESSAGE, 
           reply_markup=InlineKeyboardMarkup(buttons)) 
 
