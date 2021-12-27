@@ -1,7 +1,20 @@
 import os
-from telegram.ext import CommandHandler, MessageHandler, Filters
-from settings import WELCOME_MESSAGE, TEXT_BUTTON, URL_BUTTON, DAFTAR_HARGA, START_IMG, TELEGRAM_SUPPORT_CHAT_ID, REPLY_TO_THIS_MESSAGE, WRONG_REPLY
+from io import BytesIO
+from time import sleep
+from telegram.ext import CommandHandler, MessageHandler, Filter
+
+from database import users_db
+from main import dp
+from database.filters import CustomFilters
+from telegram.error import BadRequest, TimedOut, Unauthorized
+from telegram import TelegramError
+from settings import WELCOME_MESSAGE, TEXT_BUTTON, URL_BUTTON, DAFTAR_HARGA, START_IMG, TELEGRAM_SUPPORT_CHAT_ID, REPLY_TO_THIS_MESSAGE, WRONG_REPLY, LOGGER, SUDO_USERS
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
+
+
+USERS_GROUP = 4
+CHAT_GROUP = 10
+
 
 buttons = [
     [
@@ -10,6 +23,60 @@ buttons = [
         ),
 ]
 ]
+
+def get_user_id(username):
+    # ensure valid userid
+    if len(username) <= 5:
+        return None
+
+    if username.startswith("@"):
+        username = username[1:]
+
+    users = users_db.get_userid_by_name(username)
+
+    if not users:
+        return None
+
+    elif len(users) == 1:
+        return users[0]["_id"]
+
+    else:
+        for user_obj in users:
+            try:
+                userdat = dp.bot.get_chat(user_obj["_id"])
+                if userdat.username == username:
+                    return userdat.id
+
+            except BadRequest as excp:
+                if excp.message == "Chat not found":
+                    pass
+                else:
+                    LOGGER.exception("Error extracting user ID")
+
+    return None
+
+def broadcast(update, context):
+    to_send = update.effective_message.text.split(None, 1)
+    if len(to_send) >= 2:
+        chats = users_db.get_all_chats() or []
+        failed = 0
+        for chat in chats:
+            try:
+                context.bot.sendMessage(int(chat["chat_id"]), to_send[1])
+                sleep(0.1)
+            except TelegramError:
+                failed += 1
+                LOGGER.warning(
+                    "Couldn't send broadcast to %s, group name %s",
+                    str(chat["chat_id"]),
+                    str(chat["chat_name"]),
+                )
+
+        update.effective_message.reply_text(
+            "Broadcast complete. {} groups failed to receive the message, probably "
+            "due to being kicked.".format(failed)
+        )
+
 
 def start(update, context):
     update.effective_message.reply_photo(START_IMG,
