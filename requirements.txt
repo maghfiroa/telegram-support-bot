@@ -1,4 +1,6 @@
 python-telegram-bot
+psycopg2-binary
+pymongo[srv]
 
 # for .env file support
 python-dotenv
