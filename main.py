@@ -1,3 +1,4 @@
+import logging
 from telegram.ext import Updater
 
 from handlers import setup_dispatcher
@@ -8,6 +9,18 @@ updater = Updater(TELEGRAM_TOKEN)
 
 dp = updater.dispatcher
 dp = setup_dispatcher(dp)
+
+# enable logging
+logging.basicConfig(
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler("ubotindo-log.txt"),
+        logging.StreamHandler(),
+    ],
+    level=logging.INFO,
+)
+
+LOGGER = logging.getLogger(__name__)
 
 # Run bot
 if HEROKU_APP_NAME is None:  # pooling mode
