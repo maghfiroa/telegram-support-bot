@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """User database utils."""
 
-from main import dp
+from main import dispatcher
 from database import get_collection
 
 
@@ -26,8 +26,8 @@ CHAT_MEMBERS_DB = get_collection("CHAT_MEMBERS")
 
 def ensure_bot_in_db():
     USERS_DB.update_one(
-        {'_id': dp.bot.id},
-        {"$set": {'username': dp.bot.username}},
+        {'_id': dispatcher.bot.id},
+        {"$set": {'username': dispatcher.bot.username}},
         upsert=True,
     )
 
