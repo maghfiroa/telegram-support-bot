@@ -1,7 +1,7 @@
 import os
 from io import BytesIO
 from time import sleep
-from telegram.ext import CommandHandler, MessageHandler, Filter
+from telegram.ext import CommandHandler, MessageHandler, Filters
 
 from database import users_db
 from main import dp
