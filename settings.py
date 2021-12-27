@@ -11,7 +11,7 @@ if TELEGRAM_TOKEN is None:
 PORT = int(os.environ.get('PORT', '8443'))
 HEROKU_APP_NAME = os.getenv("HEROKU_APP_NAME")
 MONGO_URI = os.getenv("MONGO_URI") 
-SUDO_USERS = set(int(x) for x in os.getenv.get("SUDO_USERS", "").split())
+SUDO_USERS = int(SUDO_USERS)
 
 TELEGRAM_SUPPORT_CHAT_ID = os.getenv("TELEGRAM_SUPPORT_CHAT_ID")
 if TELEGRAM_SUPPORT_CHAT_ID is None or not str(TELEGRAM_SUPPORT_CHAT_ID).lstrip("-").isdigit():
