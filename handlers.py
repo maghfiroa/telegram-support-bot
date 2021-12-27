@@ -156,6 +156,7 @@ def forward_to_user(update, context):
 
 
 def setup_dispatcher(dp):
+    dp.add_handler(CommandHandler('broadcast', broadcast))
     dp.add_handler(CommandHandler('start', start))
     dp.add_handler(CommandHandler('vip', vip))
     dp.add_handler(MessageHandler(Filters.chat_type.private, forward_to_chat))
