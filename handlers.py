@@ -1,85 +1,18 @@
 import os
-from io import BytesIO
-from time import sleep
 from telegram.ext import CommandHandler, MessageHandler, Filters
-
-from database import users_db
-from main import dispatcher
-from database.filters import CustomFilters
-from telegram.error import BadRequest, TimedOut, Unauthorized
-from telegram import TelegramError
-from settings import WELCOME_MESSAGE, TEXT_BUTTON, URL_BUTTON, DAFTAR_HARGA, START_IMG, TELEGRAM_SUPPORT_CHAT_ID, REPLY_TO_THIS_MESSAGE, WRONG_REPLY, LOGGER, SUDO_USERS
+from settings import WELCOME_MESSAGE, DAFTAR_HARGA, TELEGRAM_SUPPORT_CHAT_ID, REPLY_TO_THIS_MESSAGE, WRONG_REPLY
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
-
-
-USERS_GROUP = 4
-CHAT_GROUP = 10
-
 
 buttons = [
     [
         InlineKeyboardButton(
-            text=TEXT_BUTTON, url=URL_BUTTON
+            text="Testi VIP NSID 🧾", url="https://t.me/vvipnsid"
         ),
 ]
 ]
 
-def get_user_id(username):
-    # ensure valid userid
-    if len(username) <= 5:
-        return None
-
-    if username.startswith("@"):
-        username = username[1:]
-
-    users = users_db.get_userid_by_name(username)
-
-    if not users:
-        return None
-
-    elif len(users) == 1:
-        return users[0]["_id"]
-
-    else:
-        for user_obj in users:
-            try:
-                userdat = dispatcher.bot.get_chat(user_obj["_id"])
-                if userdat.username == username:
-                    return userdat.id
-
-            except BadRequest as excp:
-                if excp.message == "Chat not found":
-                    pass
-                else:
-                    LOGGER.exception("Error extracting user ID")
-
-    return None
-
-def broadcast(update, context):
-    to_send = update.effective_message.text.split(None, 1)
-    if len(to_send) >= 2:
-        chats = users_db.get_all_chats() or []
-        failed = 0
-        for chat in chats:
-            try:
-                context.bot.sendMessage(int(chat["chat_id"]), to_send[1])
-                sleep(0.1)
-            except TelegramError:
-                failed += 1
-                LOGGER.warning(
-                    "Couldn't send broadcast to %s, group name %s",
-                    str(chat["chat_id"]),
-                    str(chat["chat_name"]),
-                )
-
-        update.effective_message.reply_text(
-            "Broadcast complete. {} groups failed to receive the message, probably "
-            "due to being kicked.".format(failed)
-        )
-
-
 def start(update, context):
-    update.effective_message.reply_photo(START_IMG,
+    update.effective_message.reply_photo("https://telegra.ph/file/e2b61fdd83480efe5d49c.jpg",
           WELCOME_MESSAGE, 
           reply_markup=InlineKeyboardMarkup(buttons)) 
 
@@ -156,7 +89,6 @@ def forward_to_user(update, context):
 
 
 def setup_dispatcher(dp):
-    dp.add_handler(CommandHandler('broadcast', broadcast))
     dp.add_handler(CommandHandler('start', start))
     dp.add_handler(CommandHandler('vip', vip))
     dp.add_handler(MessageHandler(Filters.chat_type.private, forward_to_chat))
