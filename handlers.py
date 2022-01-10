@@ -31,7 +31,7 @@ def start(update, context):
     )
 
 def vip(update, context):
-    update.effective_message.reply_photo("https://telegra.ph/file/e2b61fdd83480efe5d49c.jpg",
+    update.effective_message.reply_photo("https://telegra.ph/file/3ee9d01d99431af443863.jpg",
           DAFTAR_HARGA)
           
 def forward_to_chat(update, context):
