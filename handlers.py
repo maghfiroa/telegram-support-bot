@@ -31,8 +31,7 @@ def start(update, context):
     )
 
 def vip(update, context):
-    update.effective_message.reply_photo(
-         "https://telegra.ph/file/3ee9d01d99431af443863.jpg",
+    update.effective_message.reply_text(
           """ 🎥LIST GRUP BOK*P TANPA LINK⬇️
 
 1. 🔐VVIP CAMPURAN🔞 = Rp 40.000
